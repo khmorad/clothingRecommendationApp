@@ -1,0 +1,98 @@
+.container__slider {
+  position: relative;
+  border-radius: 15px;
+  width: 50%;
+  height: 80%;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  background-color: rgb(102, 102, 102);
+  max-width: 800px;
+  margin: auto;
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
+.container__slider > button {
+  background-color: transparent;
+  outline: none;
+  border: 0;
+  color: whitesmoke;
+  font-size: 24px;
+}
+
+.container__slider > button:active {
+  color: black;
+}
+
+.slider__btn-next,
+.slider__btn-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.slider__btn-next {
+  right: 0;
+}
+
+.slider__btn-prev {
+  left: 0;
+}
+
+.container__slider__links {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex; /* Ensure the dots are aligned properly */
+}
+
+.container__slider__links-small {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  outline: none;
+  border: 0;
+  background-color: white;
+  border: 1px solid grey;
+  transition: background-color 1s ease;
+  margin: 0 2px;
+}
+
+.container__slider__links-small-active {
+  background-color: black;
+}
+
+.slider__item {
+  box-sizing: border-box;
+  min-width: 100%;
+  overflow: hidden;
+  object-fit: cover;
+  transition: transform 1s ease;
+}
+
+.slider__item-active-1 {
+  transform: translateX(0);
+}
+
+.slider__item-active-2 {
+  transform: translateX(-100%);
+}
+
+.slider__item-active-3 {
+  transform: translateX(-200%);
+}
+
+.slider__item-active-4 {
+  transform: translateX(-300%);
+}
+
+.slider__item img {
+  width: 100%;
+  height: auto;
+}
