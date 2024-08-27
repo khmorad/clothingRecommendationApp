@@ -14,7 +14,7 @@ const UploadImage = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
-    setSelectedFileURL(URL.createObjectURL(file)); // Preview the selected image
+    setSelectedFileURL(URL.createObjectURL(file));
   };
 
   const handleUpload = async () => {
@@ -37,7 +37,7 @@ const UploadImage = () => {
       if (!response.ok) {
         console.error(`HTTP error! Status: ${response.status}`);
         const errorText = await response.text();
-        alert("Error uploading file");
+        alert("Error uploading file 1");
         setSubmitting(false);
         return;
       }
@@ -45,8 +45,8 @@ const UploadImage = () => {
       const data = await response.json();
       setSimilarItems(data);
     } catch (error) {
-      console.error("Error uploading file:", error);
-      alert("Error uploading file");
+      console.error("Error uploading file 2:", error);
+      alert("Error uploading file 3");
     } finally {
       setSubmitting(false);
     }

@@ -47,10 +47,27 @@ if not os.path.exists(UPLOAD_DIRECTORY):
 def extract_features(image_path):
     try:
         logging.debug(f"Extracting features from image: {image_path}")
-        img = Image.open(image_path).resize((224, 224))
+        
+        img = Image.open(image_path)
+        logging.debug(f"Original image mode: {img.mode}")  # Log the original mode
+        
+        # Ensure image is in RGB format
+        if img.mode != 'RGB':
+            img = img.convert('RGB')
+            logging.debug(f"Image converted to RGB mode: {img.mode}")
+        
+        img = img.resize((224, 224))  # Resize the image
         img_array = image.img_to_array(img)
-        logging.debug(f"Image array shape: {img_array.shape}")
+        logging.debug(f"Image array shape after conversion to array: {img_array.shape}")  # Log shape
+
+        # Check if the image is in grayscale despite the conversion, and expand the channels if needed
+        if img_array.shape[-1] == 1:
+            img_array = np.repeat(img_array, 3, axis=-1)
+            logging.debug(f"Image array expanded to 3 channels: {img_array.shape}")
+
         img_array = np.expand_dims(img_array, axis=0)
+        logging.debug(f"Image array shape after adding batch dimension: {img_array.shape}")  # Log shape
+        
         img_array = preprocess_input(img_array)
         features = model.predict(img_array)
         logging.debug(f"Features extracted: {features.shape}")
@@ -58,6 +75,7 @@ def extract_features(image_path):
     except Exception as e:
         logging.error(f"Error extracting features: {str(e)}")
         raise
+
 
 # Find similar images using cosine similarity
 def find_similar_images_cosine(user_image_features, dataset_embeddings):
