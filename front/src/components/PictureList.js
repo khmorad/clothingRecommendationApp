@@ -59,7 +59,7 @@ const PictureList = ({ pictureData = [] }) => {
           <div key={picture.id} className="picture-card">
             <img src={picture.src} alt={picture.id} />
             <div className="picture-info">
-              <p className="picture-score">Score: {picture.score}</p>
+              <p className="picture-score">Score: {picture.score.toFixed(2)}</p>
             </div>
           </div>
         ))}
