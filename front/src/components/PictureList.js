@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "../stylings/PictureList.css";
 
-// Function to import images from the specified directory
 function importAll(r) {
   let images = {};
-  r.keys().map((item) => {
+  r.keys().forEach((item) => {
     images[item.replace("./", "")] = r(item);
   });
   return images;
 }
 
-// Adjust the path to the new assets directory
+// Change path to where your images directory is located
 const images = importAll(
   require.context("../../public/assets/cloth/", false, /\.(png|jpe?g|svg)$/)
 );
@@ -18,33 +17,32 @@ const images = importAll(
 const PictureList = ({ pictureData = [] }) => {
   const [pictures, setPictures] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [picturesPerPage] = useState(24); // Number of images per page
+  const [picturesPerPage] = useState(24);
 
   useEffect(() => {
-    // Log the imported images and pictureData for debugging
-    console.log("Imported Images:", images);
-    console.log("Picture Data:", pictureData);
-
     setPictures(
       Object.keys(images).map((key) => ({
-        id: key,
+        id: key.replace(/\.[^/.]+$/, ""), // remove file extension
         src: images[key],
       }))
     );
   }, []);
 
-  // Filter pictures based on pictureData prop
+  // If pictureData is provided, include the score, otherwise omit it
   const filteredPictures =
     pictureData.length > 0
-      ? pictures.filter((picture) =>
-          pictureData.some(
-            (data) => data.image === picture.id.replace(/\.[^/.]+$/, "")
-          )
-        )
+      ? pictures
+          .map((picture) => {
+            const pictureInfo = pictureData.find(
+              (data) => data.image === picture.id
+            );
+            return pictureInfo
+              ? { ...picture, score: pictureInfo.similarity } // Assuming `similarity` is the score from the backend
+              : null;
+          })
+          .filter((picture) => picture !== null)
+          .sort((a, b) => b.score - a.score) // Sort by similarity score in descending order
       : pictures;
-
-  // Log filtered pictures for debugging
-  console.log("Filtered Pictures:", filteredPictures);
 
   const indexOfLastPicture = currentPage * picturesPerPage;
   const indexOfFirstPicture = indexOfLastPicture - picturesPerPage;
@@ -58,21 +56,18 @@ const PictureList = ({ pictureData = [] }) => {
   return (
     <div className="picture-list-container">
       <div className="picture-list">
-        {currentPictures.map((picture) => {
-          const pictureInfo = pictureData.find(
-            (data) => data.item_id === picture.id
-          );
-          return (
-            <div key={picture.id} className="picture-card">
-              <img src={picture.src} alt={picture.id} />
+        {currentPictures.map((picture) => (
+          <div key={picture.id} className="picture-card">
+            <img src={picture.src} alt={picture.id} />
+            {pictureData.length > 0 && ( // Only show score if pictureData is provided
               <div className="picture-info">
-                {pictureInfo && (
-                  <p className="picture-score">Score: {pictureInfo.score}</p>
-                )}
+                <p className="picture-score">
+                  Score: {picture.score.toFixed(2)}
+                </p>
               </div>
-            </div>
-          );
-        })}
+            )}
+          </div>
+        ))}
       </div>
       <div style={{ marginTop: "20px" }}>
         <Pagination
@@ -86,7 +81,6 @@ const PictureList = ({ pictureData = [] }) => {
   );
 };
 
-// Pagination component
 const Pagination = ({
   currentPage,
   picturesPerPage,
