@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import "../stylings/App.css";
 import Navbar from "./Navbar";
 import Clotheinfo from "./Clotheinfo";
+
 function Home() {
   const [showLogin, setShowLogin] = useState(false);
   const [loginStatus, setLoginStatus] = useState(false);
   const [user, setUser] = useState(null);
-  const [isEmployee, setIsEmployee] = useState(false)
+  const [isEmployee, setIsEmployee] = useState(false);
   return (
     <div className="App">
-          <Navbar
+      <Navbar
         showLogin={showLogin}
         setShowLogin={setShowLogin}
         loginStatus={loginStatus}
@@ -19,7 +20,12 @@ function Home() {
         isEmployee={isEmployee}
         setIsEmployee={setIsEmployee}
       />
-      <Clotheinfo showLogin={showLogin}loginStatus={loginStatus} user={user} isEmployee={isEmployee} />
+      <Clotheinfo
+        showLogin={showLogin}
+        loginStatus={loginStatus}
+        user={user}
+        isEmployee={isEmployee}
+      />
     </div>
   );
 }

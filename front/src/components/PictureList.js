@@ -28,12 +28,13 @@ const PictureList = ({ pictureData = [] }) => {
     );
   }, []);
 
+  // If pictureData is provided, include the score, otherwise omit it
   const filteredPictures =
     pictureData.length > 0
       ? pictures
           .map((picture) => {
             const pictureInfo = pictureData.find(
-              (data) => data.image === picture.id.replace(/\.[^/.]+$/, "")
+              (data) => data.image === picture.id
             );
             return pictureInfo
               ? { ...picture, score: pictureInfo.similarity } // Assuming `similarity` is the score from the backend
@@ -58,9 +59,13 @@ const PictureList = ({ pictureData = [] }) => {
         {currentPictures.map((picture) => (
           <div key={picture.id} className="picture-card">
             <img src={picture.src} alt={picture.id} />
-            <div className="picture-info">
-              <p className="picture-score">Score: {picture.score.toFixed(2)}</p>
-            </div>
+            {pictureData.length > 0 && ( // Only show score if pictureData is provided
+              <div className="picture-info">
+                <p className="picture-score">
+                  Score: {picture.score.toFixed(2)}
+                </p>
+              </div>
+            )}
           </div>
         ))}
       </div>
