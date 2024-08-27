@@ -25,8 +25,8 @@ The Clothing Recommender is designed to help users discover clothing items that 
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/Clothing-Recommender.git
-cd Clothing-Recommender
+git clone https://github.com/khmorad/clothingRecommendationApp.git
+cd clothingRecommendationApp
 ```
 
 ### Backend Setup
