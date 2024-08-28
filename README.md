@@ -38,6 +38,18 @@ Currently, this project stores images locally. The images used in this project w
 
 By completing these steps, you'll have all the necessary resources for the program to run as expected.
 
+## Generating `embeddings.csv`
+
+To generate your own `embeddings.csv` file, you can use our Google Colab notebook, which provides a step-by-step guide for generating embeddings from images. Follow the instructions in the notebook to produce the `embeddings.csv` file.
+
+- [Open the Google Colab Notebook to Generate Embeddings](https://colab.research.google.com/drive/1NaUW0ZwhezbDh7SIIM5MiTNEw7H-qNpB?usp=sharing)
+
+### Instructions:
+
+1. Open the notebook in Google Colab.
+2. Run the cells to generate the `embeddings.csv` file.
+3. Download the `embeddings.csv` file and place it in the `back/` directory of your project.
+
 ## Installation
 
 ### Prerequisites
