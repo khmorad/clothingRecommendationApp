@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import '../stylings/Login.css';
-import Signup from './Signup'; // Import the Signup component
+import React, { useState, useEffect } from "react";
+import "../stylings/Login.css";
+import Signup from "./Signup"; // Import the Signup component
 import {
   MDBBtn,
   MDBContainer,
@@ -9,13 +9,20 @@ import {
   MDBCard,
   MDBCardBody,
   MDBInput,
-  MDBIcon
-} from 'mdb-react-ui-kit';
+  MDBIcon,
+} from "mdb-react-ui-kit";
 
-export default function Login({ loginStatus, user, setLoginStatus, setUser, isEmployee, setIsEmployee }) {
+export default function Login({
+  loginStatus,
+  user,
+  setLoginStatus,
+  setUser,
+  isEmployee,
+  setIsEmployee,
+}) {
   // Define state variables for username, password, and user type
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [isCustomer, setIsCustomer] = useState(false);
   const [showSignup, setShowSignup] = useState(false); // State variable to toggle signup page
   const [employees, setEmployees] = useState([]);
@@ -24,40 +31,40 @@ export default function Login({ loginStatus, user, setLoginStatus, setUser, isEm
   const [employeeName, setEmployeeName] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/employee')
-      .then(response => response.json())
-      .then(data => {
+    fetch("http://127.0.0.1:5001/employee")
+      .then((response) => response.json())
+      .then((data) => {
         setEmployees(data);
-        console.log('Employees:', data);
+        console.log("Employees:", data);
       })
-      .catch(error => console.error('Error fetching employees:', error));
+      .catch((error) => console.error("Error fetching employees:", error));
   }, []);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5000/customer')
-      .then(response => response.json())
-      .then(data => {
+    fetch("http://127.0.0.1:5001/customer")
+      .then((response) => response.json())
+      .then((data) => {
         setCustomers(data);
-        console.log('Customers:', data);
+        console.log("Customers:", data);
       })
-      .catch(error => console.error('Error fetching customers:', error));
+      .catch((error) => console.error("Error fetching customers:", error));
   }, []);
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
-    const storedUserType = localStorage.getItem('userType');
+    const storedUsername = localStorage.getItem("username");
+    const storedUserType = localStorage.getItem("userType");
 
-    console.log('Checking local storage for user');
-    console.log('Stored Username:', storedUsername);
-    console.log('Stored User Type:', storedUserType);
+    console.log("Checking local storage for user");
+    console.log("Stored Username:", storedUsername);
+    console.log("Stored User Type:", storedUserType);
 
     if (storedUsername && storedUserType) {
-      console.log('User found in local storage, logging in automatically');
+      console.log("User found in local storage, logging in automatically");
       setUser(storedUsername);
       setLoginStatus(true);
-      setIsEmployee(storedUserType === 'employee');
+      setIsEmployee(storedUserType === "employee");
     } else {
-      console.log('No user found in local storage');
+      console.log("No user found in local storage");
     }
   }, [setUser, setLoginStatus, setIsEmployee]);
 
@@ -79,7 +86,7 @@ export default function Login({ loginStatus, user, setLoginStatus, setUser, isEm
 
   const handleSignupLinkClick = (e) => {
     e.preventDefault();
-    setShowSignup(true); // Set showSignup state to true to display signup page
+    setShowSignup(true);
   };
 
   const handleSubmit = (e) => {
@@ -87,14 +94,20 @@ export default function Login({ loginStatus, user, setLoginStatus, setUser, isEm
 
     //implementing a checker to see the login system
     const userExists = isEmployee
-      ? employees.some((employee) => employee.Name === username && employee.Password === password)
-      : customers.some((customer) => customer.Name === username && customer.Password === password);
+      ? employees.some(
+          (employee) =>
+            employee.Name === username && employee.Password === password
+        )
+      : customers.some(
+          (customer) =>
+            customer.Name === username && customer.Password === password
+        );
 
     if (userExists) {
       // Login successful
-      console.log('Login successful');
-      localStorage.setItem('username', username); // Store the username in local storage
-      localStorage.setItem('userType', isEmployee ? 'employee' : 'customer'); // Store the user type in local storage
+      console.log("Login successful");
+      localStorage.setItem("username", username); // Store the username in local storage
+      localStorage.setItem("userType", isEmployee ? "employee" : "customer"); // Store the user type in local storage
 
       if (isEmployee) {
         setEmployeeName(username);
@@ -109,7 +122,7 @@ export default function Login({ loginStatus, user, setLoginStatus, setUser, isEm
       }
     } else {
       // Login failed
-      console.error('Login failed');
+      console.error("Login failed");
       // You can display an error message to the user if needed
     }
   };
@@ -122,23 +135,54 @@ export default function Login({ loginStatus, user, setLoginStatus, setUser, isEm
           <h1>Login</h1>
           <form onSubmit={handleSubmit}>
             <div className="txt_field">
-              <input type="text" name="text" value={username} onChange={handleUsernameChange} required />
+              <input
+                type="text"
+                name="text"
+                value={username}
+                onChange={handleUsernameChange}
+                required
+              />
               <span></span>
               <label>Username</label>
             </div>
             <div className="txt_field">
-              <input type="password" name="password" value={password} onChange={handlePasswordChange} required />
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+              />
               <span></span>
               <label>Password</label>
             </div>
             <div className="pass">Forget Password?</div>
             <div className="checkboxes">
-              <p><input type="checkbox" className="employee check-box" checked={isEmployee} onChange={handleEmployeeCheckboxChange} />Employee</p>
-              <p><input type="checkbox" className="customer check-box" checked={isCustomer} onChange={handleCustomerCheckboxChange} />Customer</p>
+              <p>
+                <input
+                  type="checkbox"
+                  className="employee check-box"
+                  checked={isEmployee}
+                  onChange={handleEmployeeCheckboxChange}
+                />
+                Employee
+              </p>
+              <p>
+                <input
+                  type="checkbox"
+                  className="customer check-box"
+                  checked={isCustomer}
+                  onChange={handleCustomerCheckboxChange}
+                />
+                Customer
+              </p>
             </div>
             <input type="submit" value="Login" />
             <div className="signup_link">
-              Not a Member ? <a href="#" onClick={handleSignupLinkClick}>Signup</a>
+              Not a Member ?{" "}
+              <a href="#" onClick={handleSignupLinkClick}>
+                Signup
+              </a>
             </div>
           </form>
         </div>
