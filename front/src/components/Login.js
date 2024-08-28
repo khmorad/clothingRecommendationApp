@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../stylings/Login.css";
-import Signup from "./Signup"; // Import the Signup component
+import Signup from "./Signup.js"; // Import the Signup component
 import {
   MDBBtn,
   MDBContainer,
