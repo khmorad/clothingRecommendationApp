@@ -21,6 +21,23 @@ The Clothing Recommender is designed to help users discover clothing items that 
 - **Clothing Recommendation**: Get recommendations for similar clothing items based on image analysis.
 - **Interactive UI**: User-friendly interface built with React.
 
+## Image Storage and Dataset Requirements
+
+Currently, this project stores images locally. The images used in this project were obtained from the [High-Resolution VITON Zalando Dataset](https://www.kaggle.com/datasets/marquis03/high-resolution-viton-zalando-dataset) on Kaggle.
+
+### Steps to Set Up
+
+1. **Download the Dataset:**
+
+   - Download the images from the [High-Resolution VITON Zalando Dataset](https://www.kaggle.com/datasets/marquis03/high-resolution-viton-zalando-dataset).
+   - Save these images to the `front/public/assets/` directory in your local setup.
+
+2. **Obtain Vector Embeddings:**
+   - You will need the vector embeddings in the form of `embeddings.csv`.
+   - Place the `embeddings.csv` file in the `back/` directory.
+
+By completing these steps, you'll have all the necessary resources for the program to run as expected.
+
 ## Installation
 
 ### Prerequisites
