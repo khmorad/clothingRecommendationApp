@@ -23,32 +23,23 @@ The Clothing Recommender is designed to help users discover clothing items that 
 
 ## Image Storage and Dataset Requirements
 
-Currently, this project stores images locally. The images used in this project were obtained from the [High-Resolution VITON Zalando Dataset](https://www.kaggle.com/datasets/marquis03/high-resolution-viton-zalando-dataset) on Kaggle.
+Currently, images for this project are stored locally. Please download the dataset from Kaggle:
 
-### Steps to Set Up
+- **[High-Resolution VITON Zalando Dataset](https://www.kaggle.com/datasets/marquis03/high-resolution-viton-zalando-dataset)**
+
+### Setup Instructions
 
 1. **Download the Dataset:**
 
    - Download the images from the [High-Resolution VITON Zalando Dataset](https://www.kaggle.com/datasets/marquis03/high-resolution-viton-zalando-dataset).
-   - Save these images to the `front/public/assets/` directory in your local setup.
+   - Save these images to the `front/public/assets/` directory in your project.
 
 2. **Obtain Vector Embeddings:**
-   - You will need the vector embeddings in the form of `embeddings.csv`.
-   - Place the `embeddings.csv` file in the `back/` directory.
 
-By completing these steps, you'll have all the necessary resources for the program to run as expected.
+   - Generate the `embeddings.csv` file using our provided Colab notebook.
+   - Place the `embeddings.csv` file in the `back/` directory of your project.
 
-## Generating `embeddings.csv`
-
-To generate your own `embeddings.csv` file, you can use our Google Colab notebook, which provides a step-by-step guide for generating embeddings from images. Follow the instructions in the notebook to produce the `embeddings.csv` file.
-
-- [Open the Google Colab Notebook to Generate Embeddings](https://colab.research.google.com/drive/1NaUW0ZwhezbDh7SIIM5MiTNEw7H-qNpB?usp=sharing)
-
-### Instructions:
-
-1. Open the notebook in Google Colab.
-2. Run the cells to generate the `embeddings.csv` file.
-3. Download the `embeddings.csv` file and place it in the `back/` directory of your project.
+   - **[Generate Embeddings with Google Colab](https://colab.research.google.com/drive/1NaUW0ZwhezbDh7SIIM5MiTNEw7H-qNpB?usp=sharing)**
 
 ## Installation
 
