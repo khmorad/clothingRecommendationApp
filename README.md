@@ -36,10 +36,10 @@ Currently, images for this project are stored locally. Please download the datas
 
 2. **Obtain Vector Embeddings:**
 
+   **[Generate Embeddings with Google Colab](https://colab.research.google.com/drive/1NaUW0ZwhezbDh7SIIM5MiTNEw7H-qNpB?usp=sharing)**
+
    - Generate the `embeddings.csv` file using our provided Colab notebook.
    - Place the `embeddings.csv` file in the `back/` directory of your project.
-
-   - **[Generate Embeddings with Google Colab](https://colab.research.google.com/drive/1NaUW0ZwhezbDh7SIIM5MiTNEw7H-qNpB?usp=sharing)**
 
 ## Installation
 
