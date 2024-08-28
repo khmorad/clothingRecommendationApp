@@ -1,3 +1,4 @@
+![image](https://github.com/user-attachments/assets/8b49179f-1b5d-4d27-8fe2-0a078876173c)
 
 
 # Clothing Recommender
