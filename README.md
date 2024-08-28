@@ -5,6 +5,7 @@
 ## Demo
 https://www.youtube.com/watch?v=q_1arGksb4A
 
+## Introduction
 Welcome to the Clothing Recommender project! This web application recommends clothing items similar to users' favorite clothes by analyzing user-uploaded images. The recommendations are based on feature extraction using the pre-trained CNN model, ResNet50.
 
 ## Work in Progress
