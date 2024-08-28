@@ -1,5 +1,3 @@
-![image](https://github.com/user-attachments/assets/27be7600-8054-4ca4-b775-92ee33f59245)
-
 
 
 # Clothing Recommender
