@@ -46,7 +46,7 @@ const UploadImage = () => {
       setSimilarItems(data);
     } catch (error) {
       console.error("Error uploading file 2:", error);
-      alert("Error uploading file 3");
+      alert("Error uploading file 2");
     } finally {
       setSubmitting(false);
     }

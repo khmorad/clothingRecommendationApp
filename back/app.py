@@ -30,7 +30,8 @@ except Exception as e:
 
 # Load the embeddings from CSV
 try:
-    embeddings_df = pd.read_csv('embeddings.csv', index_col=0)
+    url = 'https://raw.githubusercontent.com/khmorad/csvStore/main/embeddings.csv'
+    embeddings_df = pd.read_csv(url)
     embeddings_array = embeddings_df.values
     image_names = embeddings_df.index.tolist()
     logging.debug(f"Embeddings loaded successfully. Shape: {embeddings_array.shape}")
