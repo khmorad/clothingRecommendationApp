@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/7af552a2-17fc-4f86-94b4-3d499ae3cfc2)
+![image](https://github.com/user-attachments/assets/7af552a2-17fc-4f86-94b4-3d499ae3cfc2) 
 
 
 # Clothing Recommender
