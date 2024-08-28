@@ -1,11 +1,10 @@
-
 # Clothing Recommender
 
 Welcome to the Clothing Recommender project! This web application recommends clothing items similar to users' favorite clothes by analyzing user-uploaded images. The recommendations are based on feature extraction using the pre-trained CNN model, ResNet50.
 
 ## Project Overview
 
-The Clothing Recommender is designed to help users discover clothing items that are similar to their favorite pieces. We utilized a dataset of over 10,000 clothing items from Kaggle (VITON HD) and processed them using the ResNet50 model to extract features. These features are embedded in a vector space, and user-uploaded images are similarly processed to obtain the top 10 similar clothing items.
+The Clothing Recommender is designed to help users discover clothing items that are similar to their favorite clothing items. We utilized a dataset of over 10,000 clothing items from Kaggle (VITON HD) and processed them using the ResNet50 model to extract features. These features are embedded in a vector space, and user-uploaded images are similarly processed to obtain the top 10 similar clothing items.
 
 ## Features
 
@@ -82,7 +81,6 @@ npm start
 - **Frontend**: React, HTML, CSS, JavaScript
 - **Backend**: Flask, Python
 - **Machine Learning**: TensorFlow, ResNet50
-- **APIs**: OpenAI API (optional for extended features)
 
 ## Team Members
 
