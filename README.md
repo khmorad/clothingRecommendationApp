@@ -1,11 +1,13 @@
-
 # Clothing Recommender
+
 <img src="https://media.discordapp.net/attachments/1071334736787673188/1277778362319765544/DALLE_2024-08-26_16.54.14_-_A_logo_for_a_clothing_store_without_any_text_featuring_a_magnifying_glass_hovering_over_a_piece_of_womens_clothing._The_clothing_should_be_stylish_a.webp?ex=66d06195&is=66cf1015&hm=1df9c991b0c1436ab7ade847b94da952e25fad48b985a53c01cc70cbaac30a43&=&format=webp&width=993&height=993" alt="Clothing Store Logo" width="400"/>
 
 ## Demo
+
 https://www.youtube.com/watch?v=q_1arGksb4A
 
 ## Introduction
+
 Welcome to the Clothing Recommender project! This web application recommends clothing items similar to users' favorite clothes by analyzing user-uploaded images. The recommendations are based on feature extraction using the pre-trained CNN model, ResNet50.
 
 ## Work in Progress
@@ -40,12 +42,18 @@ Currently, images for this project are stored locally. Please download the datas
    - Download the images from the [High-Resolution VITON Zalando Dataset](https://www.kaggle.com/datasets/marquis03/high-resolution-viton-zalando-dataset).
    - Save these images to the `front/public/assets/` directory in your project.
 
-2. **Obtain Vector Embeddings:**
+2. **Obtain Vector Embeddings (Optional):**
 
    **[Generate Embeddings with Google Colab](https://colab.research.google.com/drive/1NaUW0ZwhezbDh7SIIM5MiTNEw7H-qNpB?usp=sharing)**
 
-   - Generate the `embeddings.csv` file using our provided Colab notebook.
-   - Place the `embeddings.csv` file in the `back/` directory of your project.
+   - If you are working with different images, generate the `embeddings.csv` file using our provided Colab notebook.
+   - Upload the `embeddings.csv` file to a new repository you create.
+   - Obtain the raw URL of the CSV file from the repository.
+   - Replace the existing URL in `app.py` with the URL to your raw CSV data:
+
+     ```python
+     url = '<link to your raw csv data>'
+     ```
 
 ## Installation
 
