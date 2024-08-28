@@ -2,6 +2,15 @@
 
 Welcome to the Clothing Recommender project! This web application recommends clothing items similar to users' favorite clothes by analyzing user-uploaded images. The recommendations are based on feature extraction using the pre-trained CNN model, ResNet50.
 
+## Work in Progress
+
+This project is currently under development. Here’s what we’re working on:
+
+- **Google Cloud for Image Storage:** Integrating Google Cloud for storing and managing images.
+- **Include More Images in Database:** Adding additional images to the database to improve functionality and user experience.
+- **Signup:** Adding user signup functionality.
+- **Dashboard:** Developing dashboards for both employees and customers to manage and view relevant information.
+
 ## Project Overview
 
 The Clothing Recommender is designed to help users discover clothing items that are similar to their favorite clothing items. We utilized a dataset of over 10,000 clothing items from Kaggle (VITON HD) and processed them using the ResNet50 model to extract features. These features are embedded in a vector space, and user-uploaded images are similarly processed to obtain the top 10 similar clothing items.
