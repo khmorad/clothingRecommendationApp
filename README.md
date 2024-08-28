@@ -1,3 +1,7 @@
+![image](https://github.com/user-attachments/assets/27be7600-8054-4ca4-b775-92ee33f59245)
+
+
+
 # Clothing Recommender
 
 Welcome to the Clothing Recommender project! This web application recommends clothing items similar to users' favorite clothes by analyzing user-uploaded images. The recommendations are based on feature extraction using the pre-trained CNN model, ResNet50.
