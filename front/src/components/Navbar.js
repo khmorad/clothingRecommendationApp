@@ -2,16 +2,9 @@ import React, { useState } from "react";
 import "../stylings/Navbar.css";
 import Login from "./Login";
 
-export default function Navbar({
-  showLogin,
-  setShowLogin,
-  loginStatus,
-  setLoginStatus,
-  user,
-  setUser,
-  isEmployee,
-  setIsEmployee,
-}) {
+export default function Navbar({ loginStatus, setLoginStatus, user, setUser }) {
+  const [showLogin, setShowLogin] = useState(false);
+
   const handleGoogleAuthClick = () => {
     setShowLogin(true);
   };
@@ -21,7 +14,6 @@ export default function Navbar({
     localStorage.removeItem("userType");
     setLoginStatus(false);
     setUser(null);
-    setIsEmployee(false);
     setShowLogin(false);
     console.log("User logged out and local storage cleared");
   };
@@ -39,12 +31,12 @@ export default function Navbar({
       </h3>
       <ul className="nav-menu">
         <li className="nav-item">
-          <a className="bruh" href="\">
+          <a className="bruh" href="/">
             Home
           </a>
         </li>
         <li className="nav-item">
-          <a href="\upload">Upload Image</a>
+          <a href="/upload">Upload Image</a>
         </li>
       </ul>
       <div className="auth-section">
@@ -55,19 +47,22 @@ export default function Navbar({
               Logout
             </button>
           </>
-        ) : showLogin ? (
-          <Login
-            loginStatus={loginStatus}
-            user={user}
-            setLoginStatus={setLoginStatus}
-            setUser={setUser}
-            isEmployee={isEmployee}
-            setIsEmployee={setIsEmployee}
-          />
         ) : (
-          <button className="button-55" onClick={handleGoogleAuthClick}>
-            Login
-          </button>
+          <>
+            <button className="button-55" onClick={handleGoogleAuthClick}>
+              Login
+            </button>
+            {showLogin && (
+              <Login
+                loginStatus={loginStatus}
+                user={user}
+                setLoginStatus={setLoginStatus}
+                setUser={setUser}
+                showLogin={showLogin}
+                setShowLogin={setShowLogin}
+              />
+            )}
+          </>
         )}
       </div>
     </nav>

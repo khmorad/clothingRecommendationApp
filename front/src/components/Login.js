@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import "../stylings/Login.css";
 import Signup from "./Signup.js"; // Import the Signup component
 
-export default function Login({ loginStatus, user, setLoginStatus, setUser }) {
+export default function Login({
+  loginStatus,
+  user,
+  setLoginStatus,
+  setUser,
+  showLogin,
+  setShowLogin,
+}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showSignup, setShowSignup] = useState(false);
@@ -25,8 +32,9 @@ export default function Login({ loginStatus, user, setLoginStatus, setUser }) {
     if (storedUsername && storedUserType === "customer") {
       setUser(storedUsername);
       setLoginStatus(true);
+      setShowLogin(false); // Close login modal if user is already logged in
     }
-  }, [setUser, setLoginStatus]);
+  }, [setUser, setLoginStatus, setShowLogin]);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -56,54 +64,55 @@ export default function Login({ loginStatus, user, setLoginStatus, setUser }) {
     if (userExists) {
       localStorage.setItem("username", username);
       localStorage.setItem("userType", "customer");
-      setUser(username);
+      setUser(username); // Update user state
       setLoginStatus(true);
+      setShowLogin(false); // Hide login modal on successful login
+      setUsername(""); // Clear the username field
+      setPassword(""); // Clear the password field
     } else {
       console.error("Login failed: Username or Password incorrect.");
       alert("Login failed: Please check your username and password.");
     }
   };
 
-  if (!loginStatus && !showSignup) {
-    return (
-      <div className="container">
-        <div className="center">
-          <h1>Login</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="txt_field">
-              <input
-                type="text"
-                value={username}
-                onChange={handleUsernameChange}
-                required
-              />
-              <span></span>
-              <label>Username</label>
-            </div>
-            <div className="txt_field">
-              <input
-                type="password"
-                value={password}
-                onChange={handlePasswordChange}
-                required
-              />
-              <span></span>
-              <label>Password</label>
-            </div>
-            <input type="submit" value="Login" />
-            <div className="signup_link">
-              Not a Member?{" "}
-              <a href="#" onClick={handleSignupLinkClick}>
-                Signup
-              </a>
-            </div>
-          </form>
-        </div>
+  // Render nothing if not showing the login modal
+  if (!showLogin) return null;
+
+  return (
+    <div className="container">
+      <div className="center">
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="txt_field">
+            <input
+              type="text"
+              value={username}
+              onChange={handleUsernameChange}
+              required
+            />
+            <span></span>
+            <label>Username</label>
+          </div>
+          <div className="txt_field">
+            <input
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+              required
+            />
+            <span></span>
+            <label>Password</label>
+          </div>
+          <input type="submit" value="Login" />
+          <div className="signup_link">
+            Not a Member?{" "}
+            <a href="#" onClick={handleSignupLinkClick}>
+              Signup
+            </a>
+          </div>
+        </form>
+        {showSignup && <Signup />}
       </div>
-    );
-  } else if (!loginStatus && showSignup) {
-    return <Signup />;
-  } else {
-    return null;
-  }
+    </div>
+  );
 }
