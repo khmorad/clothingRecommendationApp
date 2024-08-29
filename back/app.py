@@ -30,13 +30,24 @@ except Exception as e:
 
 # Load the embeddings from CSV
 try:
-    url = 'https://raw.githubusercontent.com/khmorad/csvStore/main/embeddings.csv'
-    embeddings_df = pd.read_csv(url, index_col=0)
+    # url = 'https://raw.githubusercontent.com/khmorad/csvStore/main/embeddings.csv'
+    # embeddings_df = pd.read_csv(url, index_col=0)
+    embeddings_df = pd.read_csv("embeddings.csv", index_col=0)
     embeddings_array = embeddings_df.values
     image_names = embeddings_df.index.tolist()
     logging.debug(f"Embeddings loaded successfully. Shape: {embeddings_array.shape}")
 except Exception as e:
     logging.error(f"Error loading embeddings from CSV: {str(e)}")
+
+# Load the CSV containing image names and URLs
+# https://raw.githubusercontent.com/tkpp26/clothing-image-csv/main/uploaded_images.csv?token=GHSAT0AAAAAACWW2T3FD4QLQEGF2JLCYAQWZWQC74A
+
+try:
+    image_url_csv = 'uploaded_images.csv' 
+    image_urls_df = pd.read_csv(image_url_csv)
+    logging.debug(f"Image URLs loaded successfully. Total images: {len(image_urls_df)}")
+except Exception as e:
+    logging.error(f"Error loading image URLs from CSV: {str(e)}")
 
 # Directory to save uploaded images
 UPLOAD_DIRECTORY = os.path.join(os.path.dirname(__file__), 'uploads')
@@ -115,8 +126,12 @@ def upload_image():
         indices, similarities = find_similar_images_cosine(user_image_features, embeddings_array)
 
         top_n = 10
-        similar_images = [{"image": image_names[i], "similarity": float(similarities[0][i])}
-                          for i in indices[:top_n]]
+        similar_images = []
+        for i in indices[:top_n]:
+            image_name = image_names[i]
+            similarity = float(similarities[0][i])
+            image_url = image_urls_df[image_urls_df['image_name'] == image_name]['image_url'].values[0]
+            similar_images.append({"image_name": image_name, "similarity": similarity, "image_url": image_url})
 
         logging.debug(f"Similar images: {similar_images}")
         return jsonify(similar_images)
