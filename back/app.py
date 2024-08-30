@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
+import gdown
 from tensorflow.keras.applications import ResNet50
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input
@@ -21,6 +22,21 @@ CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
 
+# File IDs from Google Drive
+EMBEDDINGS_FILE_ID = '1c2qdQkoW_kQaneafXCORiFMfvaf28MIV'
+IMAGE_URLS_FILE_ID = '1-Mqik7pGLYCft3ugUQagqDQ8cP1LboaZ'
+
+# Directory to save downloaded files
+DOWNLOAD_DIRECTORY = os.path.join(os.path.dirname(__file__), 'downloads')
+if not os.path.exists(DOWNLOAD_DIRECTORY):
+    os.makedirs(DOWNLOAD_DIRECTORY)
+    logging.debug(f"Download directory created at {DOWNLOAD_DIRECTORY}")
+
+# Download file from Google Drive
+def download_from_google_drive(file_id, destination):
+    url = f"https://drive.google.com/uc?id={file_id}"
+    gdown.download(url, destination, quiet=False)
+
 # Load the ResNet50 model
 try:
     model = ResNet50(weights='imagenet', include_top=False, pooling='avg')
@@ -28,26 +44,27 @@ try:
 except Exception as e:
     logging.error(f"Error loading ResNet50 model: {str(e)}")
 
-# Load the embeddings from CSV
+# Download and load the embeddings from Google Drive
 try:
-    # url = 'https://raw.githubusercontent.com/khmorad/csvStore/main/embeddings.csv'
-    # embeddings_df = pd.read_csv(url, index_col=0)
-    embeddings_df = pd.read_csv("embeddings.csv", index_col=0)
+    embeddings_path = os.path.join(DOWNLOAD_DIRECTORY, 'embeddings.csv')
+    download_from_google_drive(EMBEDDINGS_FILE_ID, embeddings_path)
+    embeddings_df = pd.read_csv(embeddings_path, index_col=0)
     embeddings_array = embeddings_df.values
-    image_names = embeddings_df.index.tolist()
+    image_names_embeddings = embeddings_df.index.tolist()
     logging.debug(f"Embeddings loaded successfully. Shape: {embeddings_array.shape}")
 except Exception as e:
     logging.error(f"Error loading embeddings from CSV: {str(e)}")
 
-# Load the CSV containing image names and URLs
-# https://raw.githubusercontent.com/tkpp26/clothing-image-csv/main/uploaded_images.csv?token=GHSAT0AAAAAACWW2T3FD4QLQEGF2JLCYAQWZWQC74A
-
+# Download and load the CSV containing image names and URLs from Google Drive
 try:
-    image_url_csv = 'uploaded_images.csv' 
-    image_urls_df = pd.read_csv(image_url_csv)
+    image_url_path = os.path.join(DOWNLOAD_DIRECTORY, 'uploaded_images.csv')
+    download_from_google_drive(IMAGE_URLS_FILE_ID, image_url_path)
+    image_urls_df = pd.read_csv(image_url_path, index_col=0)
+    image_urls_df.index = image_urls_df.index.str.replace('.jpg', '')
     logging.debug(f"Image URLs loaded successfully. Total images: {len(image_urls_df)}")
 except Exception as e:
     logging.error(f"Error loading image URLs from CSV: {str(e)}")
+    image_urls_df = pd.DataFrame() 
 
 # Directory to save uploaded images
 UPLOAD_DIRECTORY = os.path.join(os.path.dirname(__file__), 'uploads')
@@ -61,16 +78,16 @@ def extract_features(image_path):
         logging.debug(f"Extracting features from image: {image_path}")
         
         img = Image.open(image_path)
-        logging.debug(f"Original image mode: {img.mode}")  # Log the original mode
+        logging.debug(f"Original image mode: {img.mode}")
         
         # Ensure image is in RGB format
         if img.mode != 'RGB':
             img = img.convert('RGB')
             logging.debug(f"Image converted to RGB mode: {img.mode}")
         
-        img = img.resize((224, 224))  # Resize the image
+        img = img.resize((224, 224))
         img_array = image.img_to_array(img)
-        logging.debug(f"Image array shape after conversion to array: {img_array.shape}")  # Log shape
+        logging.debug(f"Image array shape after conversion to array: {img_array.shape}")  
 
         # Check if the image is in grayscale despite the conversion, and expand the channels if needed
         if img_array.shape[-1] == 1:
@@ -78,7 +95,7 @@ def extract_features(image_path):
             logging.debug(f"Image array expanded to 3 channels: {img_array.shape}")
 
         img_array = np.expand_dims(img_array, axis=0)
-        logging.debug(f"Image array shape after adding batch dimension: {img_array.shape}")  # Log shape
+        logging.debug(f"Image array shape after adding batch dimension: {img_array.shape}")  
         
         img_array = preprocess_input(img_array)
         features = model.predict(img_array)
@@ -88,14 +105,13 @@ def extract_features(image_path):
         logging.error(f"Error extracting features: {str(e)}")
         raise
 
-
 # Find similar images using cosine similarity
 def find_similar_images_cosine(user_image_features, dataset_embeddings):
     try:
         logging.debug(f"Finding similar images.")
         similarities = cosine_similarity(user_image_features, dataset_embeddings)
         similar_indices = np.argsort(similarities[0])[::-1]
-        logging.debug(f"Similar images found. Indices: {similar_indices[:10]}")
+        logging.debug(f"Similar images found. Indices: {similar_indices[:10]} similarity{similarities}")
         return similar_indices, similarities
     except Exception as e:
         logging.error(f"Error finding similar images: {str(e)}")
@@ -128,9 +144,9 @@ def upload_image():
         top_n = 10
         similar_images = []
         for i in indices[:top_n]:
-            image_name = image_names[i]
+            image_name = image_names_embeddings[i]
             similarity = float(similarities[0][i])
-            image_url = image_urls_df[image_urls_df['image_name'] == image_name]['image_url'].values[0]
+            image_url = image_urls_df.loc[image_name]['image_url']
             similar_images.append({"image_name": image_name, "similarity": similarity, "image_url": image_url})
 
         logging.debug(f"Similar images: {similar_images}")

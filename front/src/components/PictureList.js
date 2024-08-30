@@ -1,48 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../stylings/PictureList.css";
 
-function importAll(r) {
-  let images = {};
-  r.keys().forEach((item) => {
-    images[item.replace("./", "")] = r(item);
-  });
-  return images;
-}
-
-// Change path to where your images directory is located
-const images = importAll(
-  require.context("../../public/assets/cloth/", false, /\.(png|jpe?g|svg)$/)
-);
-
 const PictureList = ({ pictureData = [] }) => {
-  const [pictures, setPictures] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [picturesPerPage] = useState(24);
 
-  useEffect(() => {
-    setPictures(
-      Object.keys(images).map((key) => ({
-        id: key.replace(/\.[^/.]+$/, ""), // remove file extension
-        src: images[key],
-      }))
-    );
-  }, []);
-
-  // If pictureData is provided, include the score, otherwise omit it
   const filteredPictures =
     pictureData.length > 0
-      ? pictures
-          .map((picture) => {
-            const pictureInfo = pictureData.find(
-              (data) => data.image === picture.id
-            );
-            return pictureInfo
-              ? { ...picture, score: pictureInfo.similarity } // Assuming `similarity` is the score from the backend
-              : null;
-          })
-          .filter((picture) => picture !== null)
-          .sort((a, b) => b.score - a.score) // Sort by similarity score in descending order
-      : pictures;
+      ? pictureData.sort((a, b) => b.similarity - a.similarity) // Sort by similarity score in descending order
+      : [];
 
   const indexOfLastPicture = currentPage * picturesPerPage;
   const indexOfFirstPicture = indexOfLastPicture - picturesPerPage;
@@ -57,15 +23,13 @@ const PictureList = ({ pictureData = [] }) => {
     <div className="picture-list-container">
       <div className="picture-list">
         {currentPictures.map((picture) => (
-          <div key={picture.id} className="picture-card">
-            <img src={picture.src} alt={picture.id} />
-            {pictureData.length > 0 && ( // Only show score if pictureData is provided
-              <div className="picture-info">
-                <p className="picture-score">
-                  Score: {picture.score.toFixed(2)}
-                </p>
-              </div>
-            )}
+          <div key={picture.image_name} className="picture-card">
+            <img src={picture.image_url} alt={picture.image_name} />
+            <div className="picture-info">
+              <p className="picture-score">
+                Score: {picture.similarity.toFixed(2)}
+              </p>
+            </div>
           </div>
         ))}
       </div>
