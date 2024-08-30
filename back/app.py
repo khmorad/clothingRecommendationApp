@@ -43,28 +43,32 @@ try:
     logging.debug("ResNet50 model loaded successfully.")
 except Exception as e:
     logging.error(f"Error loading ResNet50 model: {str(e)}")
-
-# Download and load the embeddings from Google Drive
-try:
-    embeddings_path = os.path.join(DOWNLOAD_DIRECTORY, 'embeddings.csv')
+    
+# Check if the embeddings file already exists
+embeddings_path = os.path.join(DOWNLOAD_DIRECTORY, 'embeddings.csv')
+if not os.path.exists(embeddings_path):
+    logging.debug(f"Embeddings file not found. Downloading to {embeddings_path}.")
     download_from_google_drive(EMBEDDINGS_FILE_ID, embeddings_path)
+
+# Check if the image URLs file already exists
+image_url_path = os.path.join(DOWNLOAD_DIRECTORY, 'uploaded_images.csv')
+if not os.path.exists(image_url_path):
+    logging.debug(f"Image URLs file not found. Downloading to {image_url_path}.")
+    download_from_google_drive(IMAGE_URLS_FILE_ID, image_url_path)
+
+# Now load the files (after ensuring they exist)
+try:
     embeddings_df = pd.read_csv(embeddings_path, index_col=0)
     embeddings_array = embeddings_df.values
     image_names_embeddings = embeddings_df.index.tolist()
     logging.debug(f"Embeddings loaded successfully. Shape: {embeddings_array.shape}")
-except Exception as e:
-    logging.error(f"Error loading embeddings from CSV: {str(e)}")
 
-# Download and load the CSV containing image names and URLs from Google Drive
-try:
-    image_url_path = os.path.join(DOWNLOAD_DIRECTORY, 'uploaded_images.csv')
-    download_from_google_drive(IMAGE_URLS_FILE_ID, image_url_path)
     image_urls_df = pd.read_csv(image_url_path, index_col=0)
     image_urls_df.index = image_urls_df.index.str.replace('.jpg', '')
     logging.debug(f"Image URLs loaded successfully. Total images: {len(image_urls_df)}")
 except Exception as e:
-    logging.error(f"Error loading image URLs from CSV: {str(e)}")
-    image_urls_df = pd.DataFrame() 
+    logging.error(f"Error loading data from CSV: {str(e)}")
+
 
 # Directory to save uploaded images
 UPLOAD_DIRECTORY = os.path.join(os.path.dirname(__file__), 'uploads')
