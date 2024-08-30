@@ -2,7 +2,7 @@ import React from 'react'
 import CustomCarousel from './CustomCarousel';
 import PictureList from './PictureList';
 import '../stylings/Clotheinfo.css';
-export default function Clotheinfo({ showLogin, loginStatus, user, isEmployee }) {
+export default function Clotheinfo({ pictureData, showLogin, loginStatus, user, isEmployee }) {
   
   const images = [
     {
@@ -31,7 +31,7 @@ export default function Clotheinfo({ showLogin, loginStatus, user, isEmployee })
 
     <div>
 <div className='clothings'>
-<PictureList />
+<PictureList pictureData={pictureData} />
 </div>
     </div>
     </>
