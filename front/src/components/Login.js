@@ -16,7 +16,7 @@ export default function Login({
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5001/customer")
+    fetch("http://127.0.0.1:5000/customer")
       .then((response) => response.json())
       .then((data) => {
         setCustomers(data);
@@ -51,16 +51,16 @@ export default function Login({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     console.log("Attempting login with:");
     console.log("Username:", username);
     console.log("Password:", password);
-
+  
     const userExists = customers.some(
       (customer) =>
-        customer.username === username && customer.password === password
+        customer.Username === username && customer.Password === password
     );
-
+  
     if (userExists) {
       localStorage.setItem("username", username);
       localStorage.setItem("userType", "customer");
@@ -74,7 +74,7 @@ export default function Login({
       alert("Login failed: Please check your username and password.");
     }
   };
-
+  
   // Render nothing if not showing the login modal
   if (!showLogin) return null;
 
