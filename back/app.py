@@ -169,6 +169,23 @@ def serve_image(filename):
     except Exception as e:
         logging.error(f"Error serving image: {str(e)}")
         return jsonify({'error': 'Image not found'}), 404
+@app.route('/all_images', methods=['GET'])
+def get_all_images():
+    try:
+        if image_urls_df.empty:
+            return jsonify({'error': 'No image URLs found'}), 404
 
+        all_images = []
+        for index, row in image_urls_df.iterrows():
+            all_images.append({
+                "image_name": index,
+                "image_url": row['image_url'],
+                "similarity": 0  # Default similarity value
+            })
+
+        return jsonify(all_images)
+    except Exception as e:
+        logging.error(f"Error retrieving all images: {str(e)}")
+        return jsonify({'error': 'Error retrieving all images'}), 500
 if __name__ == '__main__':
     app.run(debug=True)

@@ -26,9 +26,11 @@ const PictureList = ({ pictureData = [] }) => {
           <div key={picture.image_name} className="picture-card">
             <img src={picture.image_url} alt={picture.image_name} />
             <div className="picture-info">
-              <p className="picture-score">
-                Score: {picture.similarity.toFixed(2)}
-              </p>
+              {picture.similarity > 0 && (
+                <p className="picture-score">
+                  Score: {picture.similarity.toFixed(2)}
+                </p>
+              )}
             </div>
           </div>
         ))}
