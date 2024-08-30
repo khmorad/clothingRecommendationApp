@@ -17,7 +17,7 @@ export default function Navbar({ loginStatus, setLoginStatus, user, setUser }) {
     setShowLogin(false);
     console.log("User logged out and local storage cleared");
   };
-
+//   console.log("Login status: ", loginStatus);
   return (
     <nav className="navbar">
       <h3 className="logo" style={{ display: "flex", alignItems: "center", borderRadius: "20px" }}>
