@@ -1,50 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../stylings/PictureList.css";
 
-// Function to import images from the specified directory
-function importAll(r) {
-  let images = {};
-  r.keys().map((item) => {
-    images[item.replace("./", "")] = r(item);
-  });
-  return images;
-}
-
-// Adjust the path to the new assets directory
-const images = importAll(
-  require.context("../../public/assets/cloth/", false, /\.(png|jpe?g|svg)$/)
-);
-
 const PictureList = ({ pictureData = [] }) => {
-  const [pictures, setPictures] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [picturesPerPage] = useState(24); // Number of images per page
+  const [picturesPerPage] = useState(24);
 
-  useEffect(() => {
-    // Log the imported images and pictureData for debugging
-    console.log("Imported Images:", images);
-    console.log("Picture Data:", pictureData);
-
-    setPictures(
-      Object.keys(images).map((key) => ({
-        id: key,
-        src: images[key],
-      }))
-    );
-  }, []);
-
-  // Filter pictures based on pictureData prop
   const filteredPictures =
     pictureData.length > 0
-      ? pictures.filter((picture) =>
-          pictureData.some(
-            (data) => data.image === picture.id.replace(/\.[^/.]+$/, "")
-          )
-        )
-      : pictures;
-
-  // Log filtered pictures for debugging
-  console.log("Filtered Pictures:", filteredPictures);
+      ? pictureData.sort((a, b) => b.similarity - a.similarity) // Sort by similarity score in descending order
+      : [];
 
   const indexOfLastPicture = currentPage * picturesPerPage;
   const indexOfFirstPicture = indexOfLastPicture - picturesPerPage;
@@ -58,21 +22,16 @@ const PictureList = ({ pictureData = [] }) => {
   return (
     <div className="picture-list-container">
       <div className="picture-list">
-        {currentPictures.map((picture) => {
-          const pictureInfo = pictureData.find(
-            (data) => data.item_id === picture.id
-          );
-          return (
-            <div key={picture.id} className="picture-card">
-              <img src={picture.src} alt={picture.id} />
-              <div className="picture-info">
-                {pictureInfo && (
-                  <p className="picture-score">Score: {pictureInfo.score}</p>
-                )}
-              </div>
+        {currentPictures.map((picture) => (
+          <div key={picture.image_name} className="picture-card">
+            <img src={picture.image_url} alt={picture.image_name} />
+            <div className="picture-info">
+              <p className="picture-score">
+                Score: {picture.similarity.toFixed(2)}
+              </p>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
       <div style={{ marginTop: "20px" }}>
         <Pagination
@@ -86,7 +45,6 @@ const PictureList = ({ pictureData = [] }) => {
   );
 };
 
-// Pagination component
 const Pagination = ({
   currentPage,
   picturesPerPage,
