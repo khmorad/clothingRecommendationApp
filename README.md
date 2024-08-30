@@ -22,19 +22,12 @@ The Clothing Recommender is designed to help users discover clothing items that 
 
 ## Image Storage and Dataset Requirements
 
-Currently, images for this project are stored locally. Please download the dataset from Kaggle:
+Currently, images for this project are stored in Google Cloud Services. 
+The images used for this project can be found below. In the provided embeddings.csv and uploaded_images csv, the train/cloth images were used. 
 
 - **[High-Resolution VITON Zalando Dataset](https://www.kaggle.com/datasets/marquis03/high-resolution-viton-zalando-dataset)**
 
-### Setup Instructions
-
-1. **Download the Dataset:**
-
-   - Download the images from the [High-Resolution VITON Zalando Dataset](https://www.kaggle.com/datasets/marquis03/high-resolution-viton-zalando-dataset).
-   - Save these images to the `front/public/assets/` directory in your project.
-
-2. **Obtain Vector Embeddings (Optional):**
-
+**Obtain Vector Embeddings (Optional):**
    **[Generate Embeddings with Google Colab](https://colab.research.google.com/drive/1NaUW0ZwhezbDh7SIIM5MiTNEw7H-qNpB?usp=sharing)**
 
    - If you are working with different images, generate the `embeddings.csv` file using our provided Colab notebook.
