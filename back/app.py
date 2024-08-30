@@ -12,13 +12,19 @@ from PIL import Image
 from dotenv import load_dotenv
 from sklearn.metrics.pairwise import cosine_similarity
 import logging
-
+from flask import Flask, request, jsonify
+from flask_mysqldb import MySQL  
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
+mysql = MySQL(app)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
-
+app.config['MYSQL_HOST'] = os.getenv("host")
+app.config['MYSQL_USER'] = os.getenv("user")
+app.config['MYSQL_PASSWORD'] = os.getenv("password")
+app.config['MYSQL_DB'] = os.getenv("dbName")
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -187,5 +193,43 @@ def get_all_images():
     except Exception as e:
         logging.error(f"Error retrieving all images: {str(e)}")
         return jsonify({'error': 'Error retrieving all images'}), 500
+@app.route('/customer', methods=['POST'])
+def create_customer():
+    try:
+        cur = mysql.connection.cursor()
+        data = request.json
+        username = data['username']
+        email = data['email']
+        password = data['password']
+        cur.execute(
+            "INSERT INTO Customers (Username, Email, Password) VALUES (%s, %s, %s)",
+            (username, email, password)
+        )
+        mysql.connection.commit()
+        cur.close()
+        return jsonify({"message": "Customer created successfully"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route('/customer', methods=['GET'])
+def get_customers():
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM Customers")
+        customers = cur.fetchall()
+        cur.close()
+        return jsonify(customers), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+@app.route('/test_db', methods=['GET'])
+def test_db():
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute("SHOW TABLES")
+        tables = cur.fetchall()
+        cur.close()
+        return jsonify(tables), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 if __name__ == '__main__':
     app.run(debug=True)
