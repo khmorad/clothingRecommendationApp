@@ -8,3 +8,5 @@ pillow==10.4.0
 python-dotenv==1.0.1
 scikit-learn==1.5.1
 werkzeug==3.0.4
+gdown==5.2.0
+
