@@ -17,15 +17,15 @@ export default function Navbar({ loginStatus, setLoginStatus, user, setUser }) {
     setShowLogin(false);
     console.log("User logged out and local storage cleared");
   };
-
+//   console.log("Login status: ", loginStatus);
   return (
     <nav className="navbar">
-      <h3 className="logo" style={{ display: "flex", alignItems: "center" }}>
+      <h3 className="logo" style={{ display: "flex", alignItems: "center", borderRadius: "20px" }}>
         <img
           src="https://media.discordapp.net/attachments/1071334736787673188/1277778362319765544/DALLE_2024-08-26_16.54.14_-_A_logo_for_a_clothing_store_without_any_text_featuring_a_magnifying_glass_hovering_over_a_piece_of_womens_clothing._The_clothing_should_be_stylish_a.webp?ex=66d06195&is=66cf1015&hm=1df9c991b0c1436ab7ade847b94da952e25fad48b985a53c01cc70cbaac30a43&=&format=webp&width=993&height=993"
           alt="Logo"
           width="40"
-          style={{ marginRight: "10px" }}
+          style={{ marginRight: "10px" , borderRadius: "2px"}}
         />
         ClothePlus
       </h3>
