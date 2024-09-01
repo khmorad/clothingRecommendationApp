@@ -31,12 +31,11 @@ The images used for this project can be found below. In the provided embeddings.
    **[Generate Embeddings with Google Colab](https://colab.research.google.com/drive/1NaUW0ZwhezbDh7SIIM5MiTNEw7H-qNpB?usp=sharing)**
 
    - If you are working with different images, generate the `embeddings.csv` file using our provided Colab notebook.
-   - Upload the `embeddings.csv` file to a new repository you create.
-   - Obtain the raw URL of the CSV file from the repository.
-   - Replace the existing URL in `app.py` with the URL to your raw CSV data:
+   - Upload the `embeddings.csv` to Google Drive and obtain the file ID.
+   - Replace the existing file ID with the new ID:
 
      ```python
-     url = '<link to your raw csv data>'
+     EMBEDDINGS_FILE_ID = '<file ID>'
      ```
 
 ## Installation
