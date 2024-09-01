@@ -32,7 +32,7 @@ The images used for this project can be found below. In the provided embeddings.
 
    - If you are working with different images, generate the `embeddings.csv` file using our provided Colab notebook.
    - Upload the `embeddings.csv` to Google Drive and obtain the file ID.
-   - Replace the existing file ID with the new ID:
+   - In back/app.py replace the existing file ID with the new ID:
 
      ```python
      EMBEDDINGS_FILE_ID = '<file ID>'
