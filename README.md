@@ -113,12 +113,15 @@ npm start
 - **Yar Moradpour**
 - **Shizuka Takao**
 
-## Work in Progress
+## Current Status
 
-This project is currently under development. Here’s what we’re working on:
+Please note that the image storage and processing for this application is hosted on Google Cloud. Due to concerns about increased billing over time, Google Cloud services for this application are currently deactivated. If you require access for testing purposes, please contact me at shizukat@uci.edu to temporarily activate the service.
 
-- **Signup:** Adding user signup functionality.
-- **Dashboard:** Developing dashboards for both employees and customers to manage and view relevant information.
+## Known Limitations
+
+- **Image Recognition Constraints**: The app only accurately recognizes images where the clothing item is shown from the front in a straight manner. Sideways or angled images may lead to inaccurate results.
+- **Female Clothing Only**: Currently, the app is designed to recognize and recommend only female clothing items.
+- **Limited to Tops**: The application is limited to identifying and recommending tops only. It does not support pants, dresses, or accessories.
 
 ## License
 
