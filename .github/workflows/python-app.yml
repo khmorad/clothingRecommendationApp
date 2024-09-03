@@ -20,6 +20,7 @@ jobs:
           python-version: "3.x" # Replace with your specific Python version if needed
 
       - name: Install dependencies
+        working-directory: back
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
