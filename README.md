@@ -37,6 +37,7 @@ The images used for this project can be found below. In the provided embeddings.
      ```python
      EMBEDDINGS_FILE_ID = '<file ID>'
      ```
+     Feel free to make a copy of the notebooks for your own use, and don’t hesitate to contact me at shizukat@uci.edu if you encounter any issues or have questions.
 
 ## Installation
 
@@ -112,10 +113,6 @@ npm start
 
 - **Yar Moradpour**
 - **Shizuka Takao**
-
-## Current Status
-
-Please note that the image storage and processing for this application is hosted on Google Cloud. Due to concerns about increased billing over time, Google Cloud services for this application are currently deactivated. If you require access for testing purposes, please contact me at shizukat@uci.edu to temporarily activate the service.
 
 ## Known Limitations
 
